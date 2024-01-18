@@ -6,8 +6,10 @@ import argparse
 
 EVENTS={
   "/event=0x2,event_category=0x1/": "writes_bytes",
+
   "/event=0x1,event_category=0x2/": "address_translations_no_page_fault",
   "/event=0x2,event_category=0x2/": "address_translations_with_page_fault",
+
   "/event=0x10,event_category=0x3/": "memory_clear_operations",
   "/event=0x10,event_category=0x4/": "successful_descriptor_completions",
   "/event=0x8,event_category=0x4/": "error_descriptor_completions",
@@ -17,6 +19,13 @@ ACTIVE_DSAS=[
   "dsa0",
   "dsa8"
 ]
+
+def print_perf_events():
+  perf_string = ""
+  for d in ACTIVE_DSAS:
+    for e in EVENTS:
+      perf_string += f"{d}{e},"
+  print(perf_string[:-1])
 
 GB1 = 1024 * 1024 * 1024
 
@@ -100,6 +109,10 @@ def parse_events(filename):
   return dsa_info
 
 def main(args):
+  if args.perf:
+    print_perf_events()
+    return
+
   dsa_info = parse_events(args.filename)
 
   dsa_info.to_csv()
@@ -108,7 +121,8 @@ def main(args):
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
 
-  parser.add_argument('filename')
+  parser.add_argument("-p", '--perf', action='store_true')
+  parser.add_argument("-f", '--filename', action='store')
 
   args = parser.parse_args()
 
