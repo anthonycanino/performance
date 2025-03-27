@@ -14,6 +14,8 @@ Set-Variable -Name 'MicroBenchmarkPath' -Value (Join-Path $PSScriptRoot "../src/
 Set-Variable -Name 'CoreRunPath' -Value "C:\runtime\artifacts\tests\coreclr\windows.x64.Checked\Tests\Core_Root\corerun.exe"
 
 function Setup-Directory {
+    # Creates the output and artifacts directories.
+    # Suppresses output from New-Item using > $null.
     New-Item -ItemType Directory -Path $OutputDirPath > $null
     New-Item -ItemType Directory -Path $ArtifactsDirPath > $null
 
@@ -36,6 +38,8 @@ if (-not (Test-Path $OutputDirPath)) {
 }
 
 function Format-Benchmark-String {
+    # Replaces specific characters in the benchmark string using regex patterns.
+    # Uses a hashtable to define multiple replacement rules applied iteratively.
     param (
         [string]$benchmark
     )
@@ -51,10 +55,12 @@ function Format-Benchmark-String {
 }
 
 function Run-BenchmarkPGO {
+    # Runs a benchmark with PGO data collection enabled.
+    # Dynamically constructs the PGO file path and sets environment variables.
+    # Cleans up environment variables after execution to avoid side effects.
     param (
         [string]$benchmark
     )
-
     $env:DOTNET_UseLBRSampling = "0"
     $env:DOTNET_WritePGOData = "1"
     $env:DOTNET_AppendPGOData = "1"
@@ -83,10 +89,12 @@ function Run-BenchmarkPGO {
 }
 
 function Run-BenchmarkLBR {
+    # Runs a benchmark with LBR data collection enabled.
+    # Sets additional environment variables specific to LBR, such as TieredPGO and CallCountingDelayMs.
+    # Cleans up environment variables after execution to avoid side effects.
     param (
         [string]$benchmark
     )
-
     $env:DOTNET_UseLBRSampling = "1"
     $env:DOTNET_WriteLBRData = "1"
     $env:DOTNET_AppendLBRData = "1"
@@ -119,11 +127,11 @@ function Run-BenchmarkLBR {
 }
 
 function Validate-Schema-File {
+    # Checks if the schema file exists and returns $false if it does not.
+    # Issues a warning if the file is missing.
     param (
         [string]$schema_file
     )
-
-    # Check if the schema file exists
     if (-not (Test-Path $schema_file)) {
         Write-Warning "Schema file not found: $schema_file"
         return $false
