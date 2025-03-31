@@ -1,6 +1,15 @@
 param (
-  [switch]$Force
+  [switch]$Force,
+  [switch]$Debug,
+  [switch]$LBR,
+  [switch]$PGO
 )
+
+if (-not $LBR -and -not $PGO) {
+    $LBR = $true
+    $PGO = $true
+}
+
 # Store the original location
 $originalLocation = Get-Location
 
@@ -75,7 +84,17 @@ function Run-BenchmarkPGO {
         Remove-Item Env:DOTNET_AppendPGOData
     }
 
-    & "dotnet.exe" run -c Release --framework "net10.0" --filter $benchmark --artifacts $ArtifactsDirPath --coreRun $CoreRunPath --keepFiles
+    # Construct the dotnet.exe command
+    $dotnetCommand = "dotnet.exe run -c Release --framework net10.0 --filter $benchmark --artifacts $ArtifactsDirPath --coreRun $CoreRunPath --keepFiles"
+
+    # If $Debug is specified, redirect output to a file
+    if ($Debug) {
+        $output_file = $benchmark_pgo_file -replace "pgo-schema.txt$", "pgo-output.txt"
+        $dotnetCommand += " *> $output_file"
+    }
+
+    # Execute the command
+    Invoke-Expression $dotnetCommand
 
     if ($LASTEXITCODE -ne 0) {
         Write-Host "Error running PGO collection for $benchmark"
@@ -99,7 +118,7 @@ function Run-BenchmarkLBR {
     $env:DOTNET_WriteLBRData = "1"
     $env:DOTNET_AppendLBRData = "1"
     $env:DOTNET_TieredPGO = "0"
-    $env:DOTNET_TC_CallCountingDelayMs = "500"
+    $env:DOTNET_TC_CallCountingDelayMs = "1000"
 
     $benchmark_lbr_file = Join-Path $OutputDirPath "$(Format-Benchmark-String -benchmark $benchmark)$LBRFileName"
     $env:DOTNET_LBRDataPath = $benchmark_lbr_file
@@ -113,7 +132,17 @@ function Run-BenchmarkLBR {
         Remove-Item Env:DOTNET_LBRDataPath
     }
 
-    & "dotnet.exe" run -c Release --framework "net10.0" --filter $benchmark --artifacts $ArtifactsDirPath --coreRun $CoreRunPath --keepFiles
+    # Construct the dotnet.exe command
+    $dotnetCommand = "dotnet.exe run -c Release --framework net10.0 --filter $benchmark --artifacts $ArtifactsDirPath --coreRun $CoreRunPath --keepFiles"
+
+    # If $Debug is specified, redirect output to a file
+    if ($Debug) {
+        $output_file = $benchmark_lbr_file -replace "lbr-schema.txt$", "lbr-output.txt"
+        $dotnetCommand += " *> $output_file"
+    }
+
+    # Execute the command
+    Invoke-Expression $dotnetCommand
 
     if ($LASTEXITCODE -ne 0) {
         Write-Host "Error running LBR collection for $benchmark"
@@ -148,12 +177,16 @@ try {
     $env:PERFLAB_TARGET_FRAMEWORKS = "net10.0"
 
     # Create a variable that contains a list of benchmarks to run
-    $benchmarks = @("System.Numerics.Tensors.Tests.Perf_FloatingPointTensorPrimitives<Single>.Exp") 
+    $benchmarks = @("System.Buffers.Text.Tests.Base64Tests.Base64Encode")
 
     # Loop over the list of benchmarks and run the command
     foreach ($benchmark in $benchmarks) {
-        Run-BenchmarkPGO -benchmark $benchmark
-        Run-BenchmarkLBR -benchmark $benchmark
+        if ($LBR) {
+            Run-BenchmarkLBR -benchmark $benchmark
+        }
+        if ($PGO) {
+            Run-BenchmarkPGO -benchmark $benchmark
+        }
     }
 }
 catch {
