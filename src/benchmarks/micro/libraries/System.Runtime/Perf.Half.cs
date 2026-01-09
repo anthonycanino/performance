@@ -32,6 +32,13 @@ namespace System.Tests
             float.NaN
         };
 
+        public static IEnumerable<Half[]> Values => new Half[]
+        {
+            { BitConverter.UInt16BitsToHalf(0x03ff), BitConverter.UInt16BitsToHalf(0x03ff) },  //Maximum subnormal number in Half
+            { (Half)12345.0f, (Half)12345.0f }, /* same value used by other tests to compare the perf */
+            { BitConverter.UInt16BitsToHalf(0x7dff), BitConverter.UInt16BitsToHalf(0x7dff) }   //NaN
+        }
+
         [Benchmark]
         [ArgumentsSource(nameof(SingleValues))]
         public Half SingleToHalf(float value) => (Half)value;
