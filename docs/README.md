@@ -30,13 +30,12 @@ The documentation in this repo is organized into the following sections:
 - [Testing GC.Infrastructure](../src/benchmarks/gc/GC.Infrastructure/README.md) - Information on testing GC.Infrastructure.
 - [GC.Analysis.API](../src/benchmarks/gc/GC.Infrastructure/GC.Analysis.API/README.md) - Information on conducting GC, CPU and Threading analysis using .NET Interactive notebooks.
 - [GC.Infrastructure Notebooks](../src/benchmarks/gc/GC.Infrastructure/Notebooks/README.md) - Information on notebooks that either provide examples or functionality for specialized analysis
-- [Benchmark Analysis](../src/benchmarks/gc/GC.Infrastructure/Notebooks/BenchmarkAnalysis.md) - Information on a notebook which contains code for producing charts (and soon, tables) for GC benchmarks. It can currently process data
-from the ASP.NET benchmarks obtained using crank as well as ETL data.
+- [Benchmark Analysis](../src/benchmarks/gc/GC.Infrastructure/Notebooks/BenchmarkAnalysis.md) - Information on a notebook which contains code for producing charts (and soon, tables) for GC benchmarks. It can currently process data from the ASP.NET benchmarks obtained using crank as well as ETL data.
 
 ## Running Scenarios
 
 - [Scenarios workflow](scenarios-workflow.md) - An introduction of how to run scenario tests.
 - [Basic scenarios](basic-scenarios.md) - Specific instruction of how to run various basic scenarios.
-- [Blazor scenarios](blazor-scenarios) - Specific instruction of how to run _New Blazorwasm Template Size On Disk_ scenarios.
+- [Blazor scenarios](blazor-scenarios.md) - Specific instruction of how to run _New Blazorwasm Template Size On Disk_ scenarios.
 - [Cross-gen scenarios](crossgen-scenarios.md) - Specific instruction of how to run _crossgen_ scenarios.
 - [SDK scenarios](sdk-scenarios.md) - Specific instruction of how to run _SDK Build Throughput Scenario_ scenarios.
