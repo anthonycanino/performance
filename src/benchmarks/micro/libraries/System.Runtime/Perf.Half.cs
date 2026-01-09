@@ -39,5 +39,49 @@ namespace System.Tests
         [Benchmark]
         [ArgumentsSource(nameof(Values))]
         public float HalfToSingle(Half value) => (float)value;
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Values))]
+        public Half HalfAddition(Half left, Half right) => left + right;
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Values))]
+        public Half HalfSubtraction(Half left, Half right) => left - right;
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Values))]
+        public Half HalfMultiplication(Half left, Half right) => left * right;
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Values))]
+        public Half HalfDivision(Half left, Half right) => left / right;
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Values))]
+        public Half HalfNegation(Half value) => -value;
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Values))]
+        public bool HalfEquals(Half left, Half right) => left == right;
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Values))]
+        public bool HalfNotEquals(Half left, Half right) => left != right;
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Values))]
+        public bool HalfLessThan(Half left, Half right) => left < right;
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Values))]
+        public bool HalfLessThanOrEqual(Half left, Half right) => left <= right;
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Values))]
+        public bool HalfGreaterThan(Half left, Half right) => left > right;
+
+        [Benchmark]
+        [ArgumentsSource(nameof(Values))]
+        public bool HalfGreaterThanOrEqual(Half left, Half right) => left >= right;
     }
 }
