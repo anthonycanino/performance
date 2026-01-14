@@ -66,7 +66,7 @@ namespace System.Tests
         }
 
         [Benchmark(OperationsPerInvoke = LoopCount)]
-        [ArgumentsSource(nameof(Values))]
+        [ArgumentsSource(nameof(DoubleValues))]
         public Half HalfAddition(Half left, Half right)
         {
             Half result = default;
@@ -78,7 +78,7 @@ namespace System.Tests
         }
 
         [Benchmark(OperationsPerInvoke = LoopCount)]
-        [ArgumentsSource(nameof(Values))]
+        [ArgumentsSource(nameof(DoubleValues))]
         public Half HalfSubtraction(Half left, Half right)
         {
             Half result = default;
@@ -90,7 +90,7 @@ namespace System.Tests
         }
 
         [Benchmark(OperationsPerInvoke = LoopCount)]
-        [ArgumentsSource(nameof(Values))]
+        [ArgumentsSource(nameof(DoubleValues))]
         public Half HalfMultiplication(Half left, Half right)
         {
             Half result = default;
@@ -102,7 +102,7 @@ namespace System.Tests
         }
 
         [Benchmark(OperationsPerInvoke = LoopCount)]
-        [ArgumentsSource(nameof(Values))]
+        [ArgumentsSource(nameof(DoubleValues))]
         public Half HalfDivision(Half left, Half right)
         {
             Half result = default;
@@ -126,7 +126,7 @@ namespace System.Tests
         }
 
         [Benchmark(OperationsPerInvoke = LoopCount)]
-        [ArgumentsSource(nameof(Values))]
+        [ArgumentsSource(nameof(DoubleValues))]
         public bool HalfEquals(Half left, Half right)
         {
             bool result = default;
@@ -138,7 +138,7 @@ namespace System.Tests
         }
 
         [Benchmark(OperationsPerInvoke = LoopCount)]
-        [ArgumentsSource(nameof(Values))]
+        [ArgumentsSource(nameof(DoubleValues))]
         public bool HalfNotEquals(Half left, Half right)
         {
             bool result = default;
@@ -150,7 +150,7 @@ namespace System.Tests
         }
 
         [Benchmark(OperationsPerInvoke = LoopCount)]
-        [ArgumentsSource(nameof(Values))]
+        [ArgumentsSource(nameof(DoubleValues))]
         public bool HalfLessThan(Half left, Half right)
         {
             bool result = default;
@@ -162,7 +162,7 @@ namespace System.Tests
         }
 
         [Benchmark(OperationsPerInvoke = LoopCount)]
-        [ArgumentsSource(nameof(Values))]
+        [ArgumentsSource(nameof(DoubleValues))]
         public bool HalfLessThanOrEqual(Half left, Half right)
         {
             bool result = default;
@@ -174,7 +174,7 @@ namespace System.Tests
         }
 
         [Benchmark(OperationsPerInvoke = LoopCount)]
-        [ArgumentsSource(nameof(Values))]
+        [ArgumentsSource(nameof(DoubleValues))]
         public bool HalfGreaterThan(Half left, Half right)
         {
             bool result = default;
@@ -186,7 +186,7 @@ namespace System.Tests
         }
 
         [Benchmark(OperationsPerInvoke = LoopCount)]
-        [ArgumentsSource(nameof(Values))]
+        [ArgumentsSource(nameof(DoubleValues))]
         public bool HalfGreaterThanOrEqual(Half left, Half right)
         {
             bool result = default;
